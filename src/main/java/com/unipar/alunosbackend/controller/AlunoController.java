@@ -44,7 +44,7 @@ public class AlunoController {
                     combina = false;
                 }
             }
-
+            // Filtra por curso
             if(nomeCurso != null && !nomeCurso.isBlank()){
                 boolean fazCurso = false;
                 for (Curso curso : aluno.getCursos()){
@@ -60,7 +60,15 @@ public class AlunoController {
             if (combina){
                 resultado.add(aluno);
             }
+            // Filtra por email
+            if (email != null && !email.isBlank()){
+                if (!aluno.getEmail().toLowerCase().replace(" ", "").contains(email.toLowerCase().replace(" ", ""))){
+                    combina = false;
+                }
+            } // TODO: Verificar o pq email não filtra corretamente.
         }
+
+
         return resultado;
     }
 
