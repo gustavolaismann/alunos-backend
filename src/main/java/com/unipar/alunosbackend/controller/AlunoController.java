@@ -57,15 +57,16 @@ public class AlunoController {
                     combina = false;
                 }
             }
-            if (combina){
-                resultado.add(aluno);
-            }
             // Filtra por email
             if (email != null && !email.isBlank()){
                 if (!aluno.getEmail().toLowerCase().replace(" ", "").contains(email.toLowerCase().replace(" ", ""))){
                     combina = false;
                 }
             } // TODO: Verificar o pq email não filtra corretamente.
+            if (combina){
+                resultado.add(aluno);
+            }
+
         }
 
 
