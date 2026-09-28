@@ -26,6 +26,46 @@ public class AlunoController {
     );
 
 
+    // Uso do RequestParam para filtrar
+    @GetMapping("/filtrar")
+    public List<Aluno> buscaFiltro(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String nomeCurso
+    ){
+        List<Aluno> resultado = new ArrayList<>();
+
+        for (Aluno aluno : bancoDados){
+            boolean combina = true;
+
+            // Filtra por nome
+            if (nome != null && !nome.isBlank()){
+                if (!aluno.getNome().toLowerCase().replace(" ", "").contains(nome.toLowerCase().replace(" ", ""))){
+                    combina = false;
+                }
+            }
+
+            if(nomeCurso != null && !nomeCurso.isBlank()){
+                boolean fazCurso = false;
+                for (Curso curso : aluno.getCursos()){
+                    if(curso.getMateria().toLowerCase().replace(" ", "").contains(nomeCurso.toLowerCase().replace(" ", ""))){
+                        fazCurso = true;
+                        break;
+                    }
+                }
+                if (!fazCurso){
+                    combina = false;
+                }
+            }
+            if (combina){
+                resultado.add(aluno);
+            }
+        }
+        return resultado;
+    }
+
+
+
     // GET para listar todos os registros
     @GetMapping("/listar")
     public ResponseEntity<List<Aluno>> listarAlunos(){
